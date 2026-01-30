@@ -179,7 +179,7 @@ The waveform clearly shows:
 * Correct Program Counter progression
 * Register updates occurring after pipeline latency
 
-*(Add your Vivado simulation waveform image here)*
+![image alt](https://github.com/Ramyasilica/Pipelined_RISC-V---32-bit-Processor/blob/bdd1dabfdb4aacb143e96335cf7984efe9d96116/Pipelined_RISC%20V-32%20bit%20Processor.jpg)
 
 🧾 Conclusion
 
