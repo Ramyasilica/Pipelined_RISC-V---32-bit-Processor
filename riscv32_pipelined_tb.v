@@ -39,14 +39,13 @@ module riscv32_pipelined_tb();
         .x4_dbg(x4)
     );
 
-    // 10 ns clock
     always #5 clk = ~clk;
 
     initial begin
         clk = 0;
         reset = 1;
 
-        #20 reset = 0;   // release reset
+        #20 reset = 0;  
         #300 $finish;
     end
 
