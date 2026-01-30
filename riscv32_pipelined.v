@@ -18,12 +18,11 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-// =============================================================
-// 5-Stage Pipelined RISC-V Processor (RV32I subset)
+
+// 5-Stage Pipelined RISC-V Processor
 // Stages: IF | ID | EX | MEM | WB
 // Supports: ADDI, ADD, SUB
-// Includes: Data Forwarding + Load-Use Stall (basic hazard control)
-// =============================================================
+// Includes: Data Forwarding + Load-Use Stall (hazard control)
 module riscv32_pipelined (
     input  wire clk,
     input  wire reset,
@@ -37,9 +36,7 @@ module riscv32_pipelined (
     output wire [31:0] x4_dbg
 );
 
-    // =========================================================
     // IF STAGE
-    // =========================================================
     reg [31:0] pc;
     wire [31:0] pc_next = pc + 4;
 
@@ -80,9 +77,7 @@ module riscv32_pipelined (
         end
     end
 
-    // =========================================================
     // ID STAGE
-    // =========================================================
     wire [6:0] opcode = ifid_instr[6:0];
     wire [4:0] rd  = ifid_instr[11:7];
     wire [4:0] rs1 = ifid_instr[19:15];
@@ -127,9 +122,7 @@ module riscv32_pipelined (
         end
     end
 
-    // =========================================================
     // EX STAGE + FORWARDING
-    // =========================================================
     wire [31:0] alu_in1 = (forwardA == 2'b10) ? exmem_alu :
                           (forwardA == 2'b01) ? wb_wdata : idex_rs1;
 
@@ -164,9 +157,7 @@ module riscv32_pipelined (
         end
     end
 
-    // =========================================================
     // MEM/WB STAGE
-    // =========================================================
     reg [31:0] memwb_data;
     reg [4:0]  memwb_rd;
     reg        memwb_regwrite;
@@ -187,9 +178,7 @@ module riscv32_pipelined (
     wire [4:0]  wb_rd = memwb_rd;
     wire        wb_regwrite = memwb_regwrite;
 
-    // =========================================================
     // HAZARD + FORWARDING UNIT
-    // =========================================================
     reg stall;
     reg [1:0] forwardA, forwardB;
 
